@@ -12,6 +12,10 @@ body {
   flex-direction: column;
 }
 
+.buttons > button > label > input{
+  display: none;
+}
+
 .App {
   display: flex;
   flex-direction: row;
