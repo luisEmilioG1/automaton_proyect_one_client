@@ -6,15 +6,39 @@ import "./App.css";
 function App() {
   const [automatonOneFile, setAutomatonOneFile] = useState();
   const [automatonTwoFile, setAutomatonTwoFile] = useState();
-  const [dotAutomatonOne, setDotAutomatonUne] = useState();
-  const [dotAutomatonTwo, setDotAutomatonTwo] = useState(`
-  initial [label="", shape="plaintext", style="dotted"]
-  B [color=green]
-  initial -> A
-  A -> A [label="y"]
-  A -> B [label="x"] 
-  B -> B [label="x,y"]
-  `);
+  const [dotAutomatonOne, setDotAutomatonUne] = useState(`digraph {}`);
+  const [dotAutomatonTwo, setDotAutomatonTwo] = useState(`digraph {}`);
+  const [dotAutomatonOperation, setDotAutomatonOperation] =
+    useState(`digraph {}`);
+
+  function switch_to_notation(json) {
+    const initial_state = json["initial_state"];
+    let digraph = `digraph {
+            initial[label = "", shape = "plaintext", style = "dotted"]
+            initial -> ${initial_state}
+            `;
+
+    json["transitions"].forEach((element) => {
+      const init_state = element["source"];
+      const final_state = element["destiny"];
+      const event_names = element["event"];
+
+      if (json["acceptance_states"].indexOf(init_state) > -1) {
+        digraph += `${init_state}[color ="red"]
+            `;
+      }
+      if (json["acceptance_states"].indexOf(final_state) > -1) {
+        digraph += `${final_state}[color ="red"]
+            `;
+      }
+      digraph += `${init_state} -> ${final_state}[label="${event_names}"]
+            `;
+    });
+
+    digraph += "}";
+
+    return digraph;
+  }
 
   async function loadAutomaton(event) {
     const file = event.target.files[0];
@@ -31,10 +55,10 @@ function App() {
 
     if (event.target.name === "loadOne") {
       setAutomatonOneFile(file);
-      //setDotAutomatonUne(automaton);
+      setDotAutomatonUne(switch_to_notation(automaton));
     } else {
       setAutomatonTwoFile(file);
-      //setDotAutomatonTwo(automaton);
+      setDotAutomatonTwo(switch_to_notation(automaton));
     }
   }
 
@@ -52,7 +76,7 @@ function App() {
     if (!automaton_union) {
       alert(message);
     }
-
+    setDotAutomatonOperation(switch_to_notation(automaton_union));
     console.log(automaton_union);
   }
 
@@ -71,20 +95,7 @@ function App() {
             </label>
           </button>
         </div>
-        <Graphviz
-          dot={`digraph {
-  "pep" [label="Nodo", fillcolor="lightblue", style="filled", shape="triangle"] 
-  "p" [label="w", fillcolor="white", style="filled", shape="circle"] 
-  sldjfsjdl -> b[label="0.2",weight="0.2",color=red,penwidth=3.0];
-  "pep" -> c[label="0.4",weight="0.4"];
-  c -> b[label="0.6",weight="0.6"];
-  c -> e[label="0.6",weight="0.6"];
-  e -> e[label="0.1",weight="0.1"];
-  e -> b[label="0.7",weight="0.7"];
-  b -> e;
-  gg -> pep
-}`}
-        />
+        <Graphviz dot={dotAutomatonOne} />
       </div>
       <div>
         <div className="buttons">
@@ -96,7 +107,7 @@ function App() {
           </button>
         </div>
 
-        <Graphviz dot={`digraph {${dotAutomatonTwo}}`} />
+        <Graphviz dot={dotAutomatonTwo} />
       </div>
       <div>
         <div className="buttons">
@@ -110,17 +121,7 @@ function App() {
           <button type="button">reverso dos</button>
         </div>
 
-        <Graphviz
-          dot={`digraph {
-  sldjfsjdl -> b[label="0.2",weight="0.2",color=red,penwidth=3.0];
-  a -> c[label="0.4",weight="0.4"];
-  c -> b[label="0.6",weight="0.6"];
-  c -> e[label="0.6",weight="0.6"];
-  e -> e[label="0.1",weight="0.1"];
-  e -> b[label="0.7",weight="0.7"];
-  b -> e;
-}`}
-        />
+        <Graphviz dot={dotAutomatonOperation} />
       </div>
     </div>
   );
