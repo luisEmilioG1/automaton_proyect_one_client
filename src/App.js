@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Graphviz } from "graphviz-react"
-import { complement, load, union, reverse } from "./api/automatonApi"
+import { complement, load, union, reverse, intersection } from "./api/automatonApi"
 
 import "./App.css"
 function App() {
@@ -78,6 +78,24 @@ function App() {
     }
     setDotAutomatonOperation(switch_to_notation(automaton_union))
     console.log(automaton_union)
+  }
+
+  async function intersectionOperation() {
+    const body = new FormData()
+    if (!automatonOneFile || !automatonTwoFile) {
+      alert("datos incompletos para hacer unión")
+      return
+    }
+    body.append("quintuple_one", automatonOneFile)
+    body.append("quintuple_two", automatonTwoFile)
+
+    const { message, automaton_intersection } = await intersection(body)
+
+    if (!automaton_intersection) {
+      alert(message)
+    }
+    setDotAutomatonOperation(switch_to_notation(automaton_intersection))
+    console.log(automaton_intersection)
   }
 
   async function reverseOperation(body) {
@@ -176,7 +194,7 @@ function App() {
           <button type="button" onClick={unionOperation}>
             unión
           </button>
-          <button type="button">intersección</button>
+          <button type="button" onClick={intersectionOperation}>intersección</button>
           <button type="button" onClick={complementOperationOne}>complemento uno</button>
           <button type="button" onClick={complementOperationTwo}>complemento dos</button>
           <button type="button" onClick={reverseOperationOne}>reverso uno</button>
