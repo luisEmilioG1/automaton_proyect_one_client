@@ -1,19 +1,29 @@
 html,
 body {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 .buttons {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 30px;
+  left: 30px;
   display: flex;
   flex-direction: column;
 }
 
-.buttons > button > label > input{
+.buttons > button > label > input {
   display: none;
+}
+
+button {
+  background-color: #fe4800;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 1.5rem;
 }
 
 .App {
@@ -21,7 +31,8 @@ body {
   flex-direction: row;
   justify-content: space-between;
   height: 100vh;
-  background-color: aqua;
+  background-color: #8e3200;
+  padding: 1rem;
 }
 
 .App > div {
@@ -32,5 +43,18 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  border-radius: 50px;
+}
+
+.App > .buttons-container > .buttons {
+  width: 33%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 1px;
+  position: relative;
+}
+
+.Graphviz {
+  margin: 80px 30px;
 }

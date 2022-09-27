@@ -175,7 +175,7 @@ function App() {
             </label>
           </button>
         </div>
-        <Graphviz dot={dotAutomatonOne} />
+        <Graphviz dot={dotAutomatonOne} className="Graphviz" />
       </div>
       <div>
         <div className="buttons">
@@ -187,9 +187,9 @@ function App() {
           </button>
         </div>
 
-        <Graphviz dot={dotAutomatonTwo} />
+        <Graphviz dot={dotAutomatonTwo} className="Graphviz" />
       </div>
-      <div>
+      <div className="buttons-container">
         <div className="buttons">
           <button type="button" onClick={unionOperation}>
             unión
@@ -201,7 +201,7 @@ function App() {
           <button type="button" onClick={reverseOperationTwo}>reverso dos</button>
         </div>
 
-        <Graphviz dot={dotAutomatonOperation} />
+        <Graphviz dot={dotAutomatonOperation} className="Graphviz" />
       </div>
     </div>
   )
