@@ -56,5 +56,8 @@ button {
 }
 
 .Graphviz {
-  margin: 80px 30px;
+  margin: 25% auto;
+}
+.Graphviz-operations {
+  margin: 0 auto;
 }

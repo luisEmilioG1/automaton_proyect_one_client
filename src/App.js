@@ -201,7 +201,7 @@ function App() {
           <button type="button" onClick={reverseOperationTwo}>reverso dos</button>
         </div>
 
-        <Graphviz dot={dotAutomatonOperation} className="Graphviz" />
+        <Graphviz dot={dotAutomatonOperation} className="Graphviz-operations" />
       </div>
     </div>
   )
